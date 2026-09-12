@@ -185,9 +185,9 @@ hydroxide imap
 ### Fetchmail
 
 Instead of waiting for an e-mail client to connect, `hydroxide fetchmail` polls
-one or more ProtonMail folders and forwards newly detected mail to an external
-SMTP server, similar to the classic Unix `fetchmail` tool (just targeting SMTP
-instead of a local mailbox).
+one or more ProtonMail folders and forwards newly detected mail (including any
+attachments) to an external SMTP server, similar to the classic Unix
+`fetchmail` tool (just targeting SMTP instead of a local mailbox).
 
 ```shell
 hydroxide fetchmail -smtp-host mail.example.com <username>
