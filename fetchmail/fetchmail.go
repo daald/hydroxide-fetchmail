@@ -194,8 +194,15 @@ func sweepDeleteAfter(c *protonmail.Client, cfg *Config, state *State) error {
 }
 
 func forward(c *protonmail.Client, privateKeys openpgp.EntityList, msg *protonmail.Message, cfg *Config) error {
+	// ListMessages only returns metadata (Header/Body are empty); fetch the
+	// full message before assembling it.
+	full, err := c.GetMessage(msg.ID)
+	if err != nil {
+		return fmt.Errorf("failed to fetch message: %v", err)
+	}
+
 	var buf bytes.Buffer
-	if err := exports.WriteMessage(c, privateKeys, &buf, msg); err != nil {
+	if err := exports.WriteMessage(c, privateKeys, &buf, full); err != nil {
 		return fmt.Errorf("failed to assemble message: %v", err)
 	}
 
